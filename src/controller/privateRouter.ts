@@ -1,6 +1,13 @@
-import { Request, Response } from "express"
+import { NextFunction, Request, Response } from "express"
 
-const PrivateRouter = (req: Request, res: Response) =>{
-    const Authorization = req.header
-    res.json({teste : Authorization})
+const PrivateRouter = (req: Request, res: Response, next: NextFunction) =>{
+    const {password, admin} = req.headers
+    
+    if (admin === 'adminServerOwner' && password === "12345678911") {
+        next()
+    }else{
+        res.json({sucess: false, error: "senha ou e-mail incorreto"})
+    }
 }
+
+export default PrivateRouter
