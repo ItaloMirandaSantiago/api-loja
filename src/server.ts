@@ -6,7 +6,7 @@ import router from './routes/routes'
 dotenv.config()
 
 const server = express()
-
+server.use(express.json())
 server.use(express.static(path.join(__dirname, '../public')))
 server.use(express.urlencoded({extended: true}))
 
