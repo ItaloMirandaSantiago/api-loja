@@ -16,4 +16,5 @@ router.get('/login', PrivateRouter, Verification)
 router.get('/products', products)
 router.delete('/deleteproduct', PrivateRouter, deleyeDestroy)
 
+
 export default router
