@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import {Produtos} from '../model/User'
+import {Produtos} from '../model/Product'
 
 const products = async(req: Request, res: Response)=>{
     let data = await Produtos.findAll()

@@ -4,6 +4,7 @@ import createNewProduct from "../controller/createNewProduct";
 import products from "../controller/products";
 import deleyeDestroy from "../controller/deleteDestroy";
 import { Verification } from "../controller/Verification";
+import EditProduct from "../controller/EditProduct";
 
 const router = Router()
 
@@ -15,6 +16,7 @@ router.post('/admin', PrivateRouter, createNewProduct)
 router.get('/login', PrivateRouter, Verification)
 router.get('/products', products)
 router.delete('/deleteproduct', PrivateRouter, deleyeDestroy)
+router.put('/edit', PrivateRouter, EditProduct)
 
 
 export default router

@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import {Produtos} from '../model/User'
+import {Produtos} from '../model/Product'
 
 const deleyeDestroy = async (req: Request, res: Response)=>{
     const {id} = req.body
