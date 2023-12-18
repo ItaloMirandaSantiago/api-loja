@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Produtos } from "../model/Product";
 
-const PromotionProduct = async (req: Request, res: Response)=>{
+const CreatePromotion = async (req: Request, res: Response)=>{
     const {id, promotion} = req.body
     console.log(req.body, id, promotion)
     
@@ -29,4 +29,4 @@ const PromotionProduct = async (req: Request, res: Response)=>{
     }
 }
 
-export default PromotionProduct
+export default CreatePromotion

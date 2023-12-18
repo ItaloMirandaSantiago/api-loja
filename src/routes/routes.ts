@@ -5,7 +5,8 @@ import products from "../controller/products";
 import deleyeDestroy from "../controller/deleteDestroy";
 import { Verification } from "../controller/Verification";
 import EditProduct from "../controller/EditProduct";
-import PromotionProduct from "../controller/PromotionProduct";
+import CreatePromotion from "../controller/CreatePromotion";
+import Promotion from "../controller/Promotion";
 
 const router = Router()
 
@@ -14,9 +15,10 @@ router.get('/ping', (req, res) =>{
 })
 
 router.post('/admin', PrivateRouter, createNewProduct)
-router.post('/promotion', PrivateRouter, PromotionProduct)
+router.post('/createpromotion', PrivateRouter, CreatePromotion)
 router.get('/login', PrivateRouter, Verification)
 router.get('/products', products)
+router.get('/promotion', Promotion)
 router.delete('/deleteproduct', PrivateRouter, deleyeDestroy)
 router.put('/edit', PrivateRouter, EditProduct)
 

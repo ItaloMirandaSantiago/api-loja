@@ -7,7 +7,7 @@ export interface ProdutosInstance extends Model {
     description: string,
     unit: number,
     preco: number,
-    discount: number
+    discount: string
 }
 
 export const Produtos = sequelize.define<ProdutosInstance>('produtos', {
