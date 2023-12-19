@@ -4,7 +4,6 @@ import { Produtos } from "../model/Product";
 
 const Promotion = async (req: Request, res: Response)=>{
     const responseapi = await Produtos.findAll({where: {discount: {[Op.not]: null}}})
-    const data = new Date()
 
     for (let i = 0; i < responseapi.length; i++) {
 
@@ -14,6 +13,7 @@ const Promotion = async (req: Request, res: Response)=>{
 
         const discountex = new Date(formattedDate)
 
+        const data = new Date(new Intl.DateTimeFormat('en-US', { timeZone: 'America/Sao_Paulo' }).format());
         if(data > discountex){
            await Produtos.destroy({where: {id: responseapi[i].id}})
            responseapi.splice(1, i)
