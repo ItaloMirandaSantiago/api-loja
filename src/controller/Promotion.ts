@@ -19,7 +19,7 @@ const Promotion = async (req: Request, res: Response)=>{
            responseapi.splice(1, i)
         }   
     }
-    res.json({sucess: true, responseapi})
+    res.json({sucess: true, data:responseapi})
 }
 
 export default Promotion

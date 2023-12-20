@@ -15,7 +15,7 @@ const EditProduct = async (req: Request, res: Response) => {
                  title: title ? title : 'responseApi.title',
                  description: description ? description : responseApi.description,
                  unit: unit ? unit : responseApi.unit,
-                 price: price ? price : responseApi.preco
+                 price: price ? price : responseApi.price
              })
      
              res.json({sucess: true, a})

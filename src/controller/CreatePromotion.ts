@@ -2,31 +2,37 @@ import { Request, Response } from "express";
 import { Produtos } from "../model/Product";
 
 const CreatePromotion = async (req: Request, res: Response)=>{
-    const {id, promotion} = req.body
-    console.log(req.body, id, promotion)
+    const {id, promotion, newprice} = req.body
+    console.log(req.body, id, promotion, )
     
-    if (id && !isNaN(parseFloat(promotion))) {
+    
+        try{
+            if (id && !isNaN(parseFloat(promotion)) && !isNaN(newprice)) {
+                const response = await Produtos.findOne({where : {id}})
 
-        const response = await Produtos.findOne({where : {id}})
-
-        const noformat = new Date()
-
-        noformat.setDate(noformat.getDate() + parseFloat(promotion))
-
-        const data = new Intl.DateTimeFormat('pt-BR', {day: '2-digit', month: '2-digit', year: 'numeric'}).format(noformat)
-
-        if (response) {
-            await response.update({
-                discount: data
-            })
-            // new Intl.DateTimeFormat('pt-BR', {day: '2-digit', month: '2-digit', year: 'numeric'}).format(new Date())
-            res.json({sucess: true, response})
-        }else{
-            res.json({sucess: false, error: 'item não encontrado'})
+                const noformat = new Date()
+        
+                noformat.setDate(noformat.getDate() + parseFloat(promotion))
+        
+                const data = new Intl.DateTimeFormat('pt-BR', {day: '2-digit', month: '2-digit', year: 'numeric'}).format(noformat)
+                console.log(response)
+                if (response && newprice < response.price) {
+                    await response.update({
+                        discount: data,
+                        newprice
+                    })
+                    // new Intl.DateTimeFormat('pt-BR', {day: '2-digit', month: '2-digit', year: 'numeric'}).format(new Date())
+                    res.json({sucess: true, response})
+                }else{
+                    res.json({sucess:false, error: 'erro em encontrar usuário ou no valor do preço da promoção'})
+                }
+            }else{
+                res.json({sucess: false, error: 'parâmetros invalidos'})
+            }
+        }catch(error){
+            res.json({sucess: false, error})
         }
-    }else{
-        res.json({sucess: false, error: 'parâmetros invalidos'})
-    }
+
 }
 
 export default CreatePromotion
