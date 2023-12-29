@@ -9,6 +9,8 @@ import CreatePromotion from "../controller/CreatePromotion";
 import Promotion from "../controller/Promotion";
 import multer from "multer";
 import SalesProduct from "../controller/SalesProduct";
+import TradeInformation from "../controller/TradeInformation";
+import LossProduct from "../controller/LossProducts";
 
 const router = Router()
 const upload = multer({
@@ -27,9 +29,11 @@ router.get('/ping', (req, res) =>{
 
 router.post('/admin', PrivateRouter, upload.single('image'), createNewProduct)
 router.post('/createpromotion', PrivateRouter, CreatePromotion)
+router.post('/lossproduct', PrivateRouter, LossProduct)
 router.get('/login', PrivateRouter, Verification)
 router.get('/products', products)
-router.put('/products', SalesProduct)
+router.get('/information', PrivateRouter, TradeInformation)
+router.put('/products', PrivateRouter, SalesProduct)
 router.get('/promotion', Promotion)
 router.delete('/deleteproduct', PrivateRouter, deleyeDestroy)
 router.put('/edit', PrivateRouter, EditProduct)

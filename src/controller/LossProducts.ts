@@ -1,9 +1,10 @@
 import { Request, Response } from "express"
 import { Produtos } from "../model/Product"
 import { ProfitLoss } from "../model/ProfitLoss"
+import { LossProductDB } from "../model/LossProducts";
 
 
-const SalesProduct = async (req: Request, res: Response)=>{
+const LossProduct = async (req: Request, res: Response)=>{
     const currentData = new Date();
     const year = currentData.getFullYear();
     const month = String(currentData.getMonth() + 1).padStart(2, '0');
@@ -22,15 +23,29 @@ const SalesProduct = async (req: Request, res: Response)=>{
                 })    
 
                 const ProfitLossDB = await ProfitLoss.findOne({where: {data: dataFormat}})
-                
+                console.log(product)
+
+                const lossname = await LossProductDB.findOne({where: {title: product.title}})
+                if (lossname) {
+                    lossname.update({
+                        loss: lossname.loss - product.price
+                    })
+                }else{
+                    await LossProductDB.create({
+                        title: product.title,
+                        loss: -product.price,
+                        lossproduct: product.id
+                    })
+                }
+
                 if (ProfitLossDB) {
                     await ProfitLossDB.update({
-                        result: (ProfitLossDB.result + (product.price - product.productionprice))
+                        result: (ProfitLossDB.result - product.productionprice)
                     })
                     res.json({sucees: true, ProfitLossDB})
                 }else{
                     await ProfitLoss.create({
-                        result: (product.price - product.productionprice)
+                        result: -product.productionprice
                     })
                     res.json({sucess: true, ProfitLossDB})
                 }
@@ -42,8 +57,9 @@ const SalesProduct = async (req: Request, res: Response)=>{
             res.json({sucess: false, error: "paramêtro incorreto"})
         }
     }catch(err){
+        console.log(err)
         res.json({sucess: false, error: 'error interno do servidor'})
     }
 }
 
-export default SalesProduct
+export default LossProduct
