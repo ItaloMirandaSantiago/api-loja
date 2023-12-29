@@ -7,6 +7,7 @@ export interface ProdutosInstance extends Model {
     description: string,
     unit: number,
     price: number,
+    productionprice: number,
     discount: string
 }
 
@@ -25,16 +26,20 @@ export const Produtos = sequelize.define<ProdutosInstance>('produtos', {
     },
     unit: {
         type: DataTypes.INTEGER,
-        allowNull: true
+    },
+    productionprice : {
+        type: DataTypes.STRING,
     },
     price: {
         type: DataTypes.STRING
     },
     newprice: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        allowNull: true
     },
     discount: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        allowNull: true
     }}, {
         tableName: 'produtos',
         timestamps: false
