@@ -50,7 +50,7 @@ const LossProduct = async (req: Request, res: Response)=>{
                     res.json({sucess: true, ProfitLossDB})
                 }
             }else{
-                res.json({sucess: false, error: "produto não encontrado"})
+                res.json({sucess: false, error: "produto não encontrado ou sem unidades"})
             }
             
         }else{

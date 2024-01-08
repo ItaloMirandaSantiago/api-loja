@@ -2,21 +2,21 @@ import { Request, Response } from "express";
 import { Produtos } from "../model/Product";
 
 const CreatePromotion = async (req: Request, res: Response)=>{
-    const {id, promotion, newprice} = req.body
-    console.log(req.body, id, promotion, )
+    const {id, discount, newprice} = req.body
+    console.log(req.body, id, discount )
     
     
         try{
-            if (id && !isNaN(parseFloat(promotion)) && !isNaN(newprice)) {
+            if (id && !isNaN(parseFloat(discount)) && !isNaN(newprice)) {
                 const response = await Produtos.findOne({where : {id}})
 
                 const noformat = new Date()
         
-                noformat.setDate(noformat.getDate() + parseFloat(promotion))
+                noformat.setDate(noformat.getDate() + parseFloat(discount))
         
                 const data = new Intl.DateTimeFormat('pt-BR', {day: '2-digit', month: '2-digit', year: 'numeric'}).format(noformat)
-                console.log(response)
-                if (response && newprice < response.price) {
+                
+                if (response && Number(newprice) < Number(response.price)) {
                     await response.update({
                         discount: data,
                         newprice
