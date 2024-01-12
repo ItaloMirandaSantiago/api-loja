@@ -9,6 +9,7 @@ const TradeInformation = async (req: Request, res: Response)=>{
 
        let solds = []
        let loss = []
+       let greaterProfit = 0
        for (let i = 0; i < ApiInformationProduct.length; i++) {
         if (ApiInformationProduct[i].sold > 0) {
             solds.push(ApiInformationProduct[i])
@@ -16,8 +17,14 @@ const TradeInformation = async (req: Request, res: Response)=>{
             loss.push(ApiInformationProduct[i])
         }
         
+        if (greaterProfit < (ApiInformationProduct[i].price - ApiInformationProduct[i].productionprice)) {
+            greaterProfit = ApiInformationProduct[i].price - ApiInformationProduct[i].productionprice
+            loss.push(ApiInformationProduct[i])
+            loss.sort((a, b) => (b.price - b.productionprice) - (a.price - a.productionprice)).slice(0, 3)
+        }
+
        }
-        res.json({sucess: true, date, solds, loss})
+        res.json({sucess: true, date, solds, loss: loss.sort((a, b) => (b.price - b.productionprice) - (a.price - a.productionprice)).slice(0, 3)})
     }catch(error){
         res.json({sucess: false, error})
     }

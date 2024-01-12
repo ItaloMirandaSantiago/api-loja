@@ -1,10 +1,10 @@
-import { Request, Response } from "express"
+import { Request, Response } from "express";
 import { Produtos } from "../model/Product"
 import { ProfitLoss } from "../model/ProfitLoss"
 import { Op } from "sequelize"
 
+const Purchase = async (req: Request, res: Response)=>{
 
-const SalesProduct = async (req: Request, res: Response)=>{
     const currentData = new Date()
     const year = currentData.getFullYear()
     const month = String(currentData.getMonth() + 1).padStart(2, '0')
@@ -12,7 +12,7 @@ const SalesProduct = async (req: Request, res: Response)=>{
     const dataFormat = `${year}-${month}-${day}`
     let profit = 0
     console.log(dataFormat)
-    const { products, id } = req.body
+    const { products } = req.body
     console.log(req.body)
     try{
         if (products.length > 0) {
@@ -24,12 +24,9 @@ const SalesProduct = async (req: Request, res: Response)=>{
                     if (product[i].id === products[0].id) {
 
                         await product[i].update({
-                            unit: (product[i].unit - products[0].sale),
-                            sold: product[i].unit + products[0].sale
+                            unit: (product[i].unit + products[0].sale),
                         })  
-                        console.log(product[i])
-                        console.log(product[i].productionprice - product[i].price)
-                        profit = profit +((product[i].price - product[i].productionprice) * products[0].sale)
+                        profit = profit - (product[i].productionprice * products[0].sale)
 
                         products.splice(0, 1)
                     }
@@ -41,7 +38,7 @@ const SalesProduct = async (req: Request, res: Response)=>{
                 
                 if (ProfitLossDB) {
                     console.log('entrou')
-
+                    console.log(profit)
                     await ProfitLossDB.update({
                         result: (ProfitLossDB.result + profit)
                     })
@@ -64,6 +61,7 @@ const SalesProduct = async (req: Request, res: Response)=>{
         console.log(err)
         res.json({sucess: false, error: 'error interno do servidor'})
     }
+    
 }
 
-export default SalesProduct
+export default Purchase
