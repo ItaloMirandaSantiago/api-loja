@@ -14,6 +14,7 @@ const TradeInformation = async (req: Request, res: Response)=>{
         if (ApiInformationProduct[i].sold > 0) {
             solds.push(ApiInformationProduct[i])
         }else if (ApiInformationProduct[i].sold < 0) {
+            console.log(ApiInformationProduct[i])
             loss.push(ApiInformationProduct[i])
         }
         
