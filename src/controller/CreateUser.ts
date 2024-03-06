@@ -5,10 +5,26 @@ const CreateUser = async (req: Request, res: Response) => {
     const {password, email, password1} = req.body
 
     try {
-
-            User.create({email, password})
-
-        res.json({sucess: true, menssage: "ai ze da manga", password, email})
+            if (password && email && password1) {
+                if (password === password1) {
+                    const UserExisting = await User.findAll({where : {email}})
+               
+                    if (UserExisting.length) {
+                        res.json({sucess: false, menssage: "Usuario já consta no sistema", UserExisting})
+                    }else{
+                        const NewUser = await User.create({email, password})
+                        if (NewUser) {
+                            res.json({sucess: true, menssage: "ai ze da manga", password, email})
+                        }else{
+                            res.json({sucess: false, error: "servidor fora do ar"})
+                        }
+                    }
+                }else{
+                    res.json({sucess: false,  menssage: "as senhas não são iguais"})
+                }
+            }else{
+                res.json({sucess: false, menssage: "pârametros faltantes"})
+            }
     } catch (err) {
         res.json({sucess: false, error: "servidor fora do ar", err})
     }

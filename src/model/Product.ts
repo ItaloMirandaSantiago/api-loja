@@ -18,6 +18,10 @@ export const Produtos = sequelize.define<ProdutosInstance>('produtos', {
         autoIncrement: true,
         type: DataTypes.INTEGER
     },
+    email : {
+        unique: true,
+        type: DataTypes.TEXT
+    },
     title : {
         unique: true,
         type: DataTypes.STRING

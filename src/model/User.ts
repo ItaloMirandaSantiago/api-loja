@@ -10,8 +10,8 @@ export interface UserInstance extends Model {
 
 export const User = sequelize.define<UserInstance>('user', {
     email: {
-        primaryKey: true,
-        type: DataTypes.TEXT
+        type: DataTypes.STRING,
+        primaryKey: true
     },
     password: {
         type: DataTypes.TEXT
