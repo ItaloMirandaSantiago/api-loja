@@ -25,7 +25,7 @@ const SalesProduct = async (req: Request, res: Response)=>{
 
                         await product[i].update({
                             unit: (product[i].unit - products[0].sale),
-                            sold: product[i].unit + products[0].sale
+                            sold: product[i].sold + products[0].sale
                         })  
                         console.log(product[i])
                         console.log(product[i].productionprice - product[i].price)
@@ -37,7 +37,7 @@ const SalesProduct = async (req: Request, res: Response)=>{
                 }
        
 
-                const ProfitLossDB = await ProfitLoss.findOne({where: {data: dataFormat}})
+                const ProfitLossDB = await ProfitLoss.findOne({where: {data: dataFormat, email}})
                 
                 if (ProfitLossDB) {
                     console.log('entrou')
@@ -49,7 +49,8 @@ const SalesProduct = async (req: Request, res: Response)=>{
                 }else{
                     console.log('else')
                     await ProfitLoss.create({
-                        result: profit
+                        result: profit,
+                        email
                     })
                     res.json({sucess: true, product: 'adicionado', profit})
                 }

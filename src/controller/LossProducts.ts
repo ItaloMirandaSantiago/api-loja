@@ -22,7 +22,7 @@ const LossProduct = async (req: Request, res: Response)=>{
                     sold: ++product.sold
                 })    
 
-                const ProfitLossDB = await ProfitLoss.findOne({where: {data: dataFormat}})
+                const ProfitLossDB = await ProfitLoss.findOne({where: {data: dataFormat, email}})
 
                 const lossname = await LossProductDB.findOne({where: {title: product.title}})
                 if (lossname) {

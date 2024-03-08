@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import { User } from "../model/User"
+import bcrypt from 'bcrypt'
 
 const CreateUser = async (req: Request, res: Response) => {
     const {password, email, password1} = req.body
@@ -12,7 +13,8 @@ const CreateUser = async (req: Request, res: Response) => {
                     if (UserExisting.length) {
                         res.json({sucess: false, menssage: "Usuario já consta no sistema", UserExisting})
                     }else{
-                        const NewUser = await User.create({email, password})
+                        const hash = bcrypt.hashSync(password, 10)
+                        const NewUser = await User.create({email, password: hash})
                         if (NewUser) {
                             res.json({sucess: true, menssage: "Usuário criado com sucesso", password, email})
                         }else{
