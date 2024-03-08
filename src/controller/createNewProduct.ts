@@ -15,12 +15,16 @@ const createNewProduct = async (req: Request, res: Response) =>{
                 await sharp(req.file.path).resize(500).toFormat('jpg').toFile(`src/public/media/${req.file.filename}.jpg`)
                 await unlink(req.file.path)
             }
-      
+            const ProductExisting = await Produtos.findAll({where: {title}})
+            if (ProductExisting.length) {
+                res.json({sucess: "false", menssage: "Produto já consta no  sistema"})
+            }else{
                 let produto = await Produtos.create({
                     email,title, description,unit,price: price, productionprice
                 })
     
                 res.json({sucess: true, produto})  
+            }
         }else{
             res.json({sucess: false, error: 'parâmetros incorretos'})
         }

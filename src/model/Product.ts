@@ -1,5 +1,6 @@
 import {Model, DataTypes} from "sequelize"
 import {sequelize} from "../instances/mysql"
+import { User } from "./User"
 
 export interface ProdutosInstance extends Model {
     id:number,
@@ -20,34 +21,44 @@ export const Produtos = sequelize.define<ProdutosInstance>('produtos', {
     },
     email : {
         unique: true,
-        type: DataTypes.TEXT
+        type: DataTypes.STRING(50),
+        allowNull: false,
+        references: {
+            key: 'email',
+            model: User
+        }
     },
     title : {
         unique: true,
-        type: DataTypes.STRING
+        type: DataTypes.STRING(50),
+        allowNull: false
     },
     description: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING(50),
+        allowNull: false
     },
     unit: {
         type: DataTypes.INTEGER,
+        allowNull: false
     },
     productionprice : {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(50),
+        allowNull: false
     },
     price: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING(50),
+        allowNull: false
     },
     newprice: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(50),
         allowNull: true
     },
     discount: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(50),
         allowNull: true
     },
     sold:{
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         allowNull: true
     }}, {
         tableName: 'produtos',

@@ -3,12 +3,12 @@ import { Produtos } from "../model/Product";
 
 const CreatePromotion = async (req: Request, res: Response)=>{
     const {id, discount, newprice} = req.body
-    console.log(req.body, id, discount )
+    const email = req.headers.admin
     
     
         try{
             if (id && !isNaN(parseFloat(discount)) && !isNaN(newprice)) {
-                const response = await Produtos.findOne({where : {id}})
+                const response = await Produtos.findOne({where : {id, email}})
 
                 const noformat = new Date()
         

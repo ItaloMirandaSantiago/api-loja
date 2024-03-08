@@ -11,10 +11,10 @@ const LossProduct = async (req: Request, res: Response)=>{
     const day = String(currentData.getDate()).padStart(2, '0');
     const dataFormat = new Date(`${year}-${month}-${day}`);
     const { id } = req.body
-
+    const email = req.headers.admin
     try{
         if (id > 0) {
-            const product = await Produtos.findOne({where: {id}})
+            const product = await Produtos.findOne({where: {id, email}})
 
             if (product) {
                 await product.update({
@@ -23,7 +23,6 @@ const LossProduct = async (req: Request, res: Response)=>{
                 })    
 
                 const ProfitLossDB = await ProfitLoss.findOne({where: {data: dataFormat}})
-                console.log(product)
 
                 const lossname = await LossProductDB.findOne({where: {title: product.title}})
                 if (lossname) {

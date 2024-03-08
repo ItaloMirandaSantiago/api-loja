@@ -14,9 +14,9 @@ const CreateUser = async (req: Request, res: Response) => {
                     }else{
                         const NewUser = await User.create({email, password})
                         if (NewUser) {
-                            res.json({sucess: true, menssage: "ai ze da manga", password, email})
+                            res.json({sucess: true, menssage: "Usuário criado com sucesso", password, email})
                         }else{
-                            res.json({sucess: false, error: "servidor fora do ar"})
+                            res.json({sucess: false, error: "servidor fora do ar - não foi possivel criar usuário"})
                         }
                     }
                 }else{

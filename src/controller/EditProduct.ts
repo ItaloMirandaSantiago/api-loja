@@ -3,11 +3,11 @@ import { Produtos } from "../model/Product"
 
 const EditProduct = async (req: Request, res: Response) => {
     const {id, title, description, unit, price} = req.body
-    
+    const email = req.headers.admin
     try{
         if (id) {
 
-            const responseApi = await Produtos.findOne({where : {id}})
+            const responseApi = await Produtos.findOne({where : {id, email}})
      
             if (responseApi) {
      

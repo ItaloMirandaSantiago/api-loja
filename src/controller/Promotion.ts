@@ -4,7 +4,8 @@ import { Produtos } from "../model/Product";
 
 const Promotion = async (req: Request, res: Response)=>{
     try{
-        const responseapi = await Produtos.findAll({where: {discount: {[Op.not]: null}}})
+        const email = req.headers.admin
+        const responseapi = await Produtos.findAll({where: {email, discount: {[Op.not]: null}}})
 
         for (let i = 0; i < responseapi.length; i++) {
     

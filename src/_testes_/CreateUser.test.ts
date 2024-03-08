@@ -26,10 +26,23 @@ describe('Teste de rotas', ()=>{
         .send({email, password, password1: password})
         .then(
             response =>{
-                console.log(response)
                 expect(response.body.sucess).toBe(true)
+                expect(response.body.menssage).toBe('Usuário criado com sucesso')
                 return done()
             }
         )
+    })
+
+    it("criando um usuario que já consta no sistema ", (done)=>{
+        request(api).post('/createuser')
+        .send({email, password, password1: password})
+        .then(
+            response =>{
+                expect(response.body.sucess).toBe(false)
+                expect(response.body.menssage).toBe('Usuario já consta no sistema')
+                return done()
+            }
+        )
+
     })
 })

@@ -13,11 +13,11 @@ const SalesProduct = async (req: Request, res: Response)=>{
     let profit = 0
     console.log(dataFormat)
     const { products, id } = req.body
-    console.log(req.body)
+    const email  = req.headers.admin
     try{
         if (products.length > 0) {
             console.log('entrouu')
-             const product = await Produtos.findAll({where: {id:{ [Op.in]: products.map((t: { id: number })=>t.id)}}})
+             const product = await Produtos.findAll({where: {email, id:{ [Op.in]: products.map((t: { id: number })=>t.id)}}})
             console.log(`esse é o valor de produto ${product}`)
             if (products && product.length > 0) {
                 for (let i = 0; i < product.length; i++) {

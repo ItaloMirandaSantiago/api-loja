@@ -4,8 +4,9 @@ import { Produtos } from "../model/Product"
 
 const TradeInformation = async (req: Request, res: Response)=>{
     try{
-       const date = await ProfitLoss.findAll()
-       const ApiInformationProduct = await Produtos.findAll()
+        const email = req.headers.admin
+       const date = await ProfitLoss.findAll({where: {email}})
+       const ApiInformationProduct = await Produtos.findAll({where: {email}})
 
        let solds = []
        let loss = []
