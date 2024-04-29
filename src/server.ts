@@ -6,3 +6,5 @@ dotenv.config()
 api.listen(process.env.PORT, ()=>{
     console.log('rodando')
 } )
+
+export default api

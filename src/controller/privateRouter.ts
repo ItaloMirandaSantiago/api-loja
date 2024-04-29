@@ -13,11 +13,11 @@ const PrivateRouter = async (req: Request, res: Response, next: NextFunction) =>
                 if (hash) {
                     next()
                 }else{
-                    res.json({sucess: false, menssage: 'Usuário ou senha errados'})
+                    res.json({sucess: false, menssage: 'senha ou e-mail incorreto'})
                 }
                 
             }else{
-                res.json({sucess: false, menssage: 'Usuário ou senha errados'})
+                res.json({sucess: false, menssage: 'senha ou e-mail incorreto'})
             }
             
         }else{
