@@ -20,6 +20,9 @@ export const ProfitLoss = sequelize.define<ProfitLossInstance>('profitproducts',
     },
     result:{
         type: DataTypes.INTEGER
+    },
+    email:{
+        type: DataTypes.STRING
     }}, {
         tableName:'profitproducts',
         timestamps: false
